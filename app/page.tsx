@@ -11,14 +11,14 @@ import HappyCustomers from "./Components/Home/HappyCustomer";
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Navbar/>
+      
       <HeroSection/>
       <CollectionSection/>
       <FeaturedProducts/>
       <LatestProducts/>
       <ArticlesSection/>
       <HappyCustomers/>
-      <Footer/>
+      
     </div>
   );
 }
