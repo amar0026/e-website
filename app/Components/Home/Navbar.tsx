@@ -46,11 +46,11 @@ const CloseIcon = () => (
 );
 
 const NAV_LINKS = [
-  { label: "Shop",       href: "/shop" },
-  { label: "Our Story",  href: "/our-story" },
+  { label: "Shop", href: "/shop" },
+  { label: "Our Story", href: "/ourstorypage" },
   { label: "Collection", href: "/collection" },
-  { label: "Blogs",      href: "/blogs" },
-  { label: "Reviews",    href: "/reviews" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "Reviews", href: "/reviews" },
 ];
 
 // Cart item count — replace with your real cart state/context

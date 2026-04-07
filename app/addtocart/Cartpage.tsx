@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+
 /* ── Icons ── */
 const ChevronRight = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -49,48 +50,12 @@ const HeartIcon = () => (
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
   </svg>
 );
-const UserIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>
-);
-const SearchIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-  </svg>
-);
-const MenuIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="3" y1="6" x2="21" y2="6" />
-    <line x1="3" y1="12" x2="21" y2="12" />
-    <line x1="3" y1="18" x2="21" y2="18" />
-  </svg>
-);
-const CloseIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
 const CheckIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
     strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
-
-/* ── Nav ── */
-const NAV_LINKS = [
-  { label: "Shop", href: "/shop" },
-  { label: "Our Story", href: "/our-story" },
-  { label: "Collection", href: "/collection" },
-  { label: "Blogs", href: "/blogs" },
-  { label: "Reviews", href: "/reviews" },
-];
 
 const CART_STORAGE_KEY = "vessa_cart";
 
@@ -134,8 +99,6 @@ export default function CartPage() {
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [couponError, setCouponError] = useState(false);
-  const [search, setSearch] = useState("");
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
   const discount = couponApplied ? Math.round(subtotal * 0.1) : 0;
@@ -170,7 +133,6 @@ export default function CartPage() {
     }
   };
 
-  /* ── Navigate to payment page, pass order summary via query params ── */
   const handleCheckout = () => {
     const params = new URLSearchParams({
       subtotal: subtotal.toString(),
@@ -187,55 +149,7 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f3f0] font-sans text-[#1a1a1a]">
-
-      {/* ── NAVBAR ── */}
-      <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-20">
-        <div className="max-w-[1920px] mx-auto px-6 lg:px-12 h-14 flex items-center justify-between gap-6">
-          <Link href="/" className="text-xl font-black uppercase shrink-0 hover:opacity-80 transition-opacity" style={{ letterSpacing: "0.18em" }}>
-            VESSA
-          </Link>
-          <nav className="hidden md:flex items-center gap-7">
-            {NAV_LINKS.map(({ label, href }) => (
-              <Link key={label} href={href} className="text-sm text-gray-700 hover:text-black transition-colors whitespace-nowrap">{label}</Link>
-            ))}
-          </nav>
-          <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-2 border border-gray-300 rounded-md px-3 py-1.5 focus-within:border-gray-500 transition-colors w-36">
-              <SearchIcon />
-              <input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)}
-                className="bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 w-full" />
-            </div>
-            <button className="text-gray-700 hover:text-black transition-colors"><UserIcon /></button>
-            <Link href="/cart" className="relative text-gray-700 hover:text-black transition-colors">
-              <CartIcon />
-              {cartCount > 0 && <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{cartCount}</span>}
-            </Link>
-          </div>
-          <div className="flex md:hidden items-center gap-3">
-            <button className="text-gray-700"><UserIcon /></button>
-            <Link href="/cart" className="relative text-gray-700">
-              <CartIcon />
-              {cartCount > 0 && <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{cartCount}</span>}
-            </Link>
-            <button className="text-gray-700" onClick={() => setMobileOpen((o) => !o)}>
-              {mobileOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </div>
-        </div>
-        {mobileOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-6 py-5 flex flex-col gap-4">
-            <div className="flex items-center gap-2 border border-gray-300 rounded-md px-3 py-2 w-full">
-              <SearchIcon />
-              <input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)}
-                className="bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400 w-full" />
-            </div>
-            {NAV_LINKS.map(({ label, href }) => (
-              <Link key={label} href={href} onClick={() => setMobileOpen(false)} className="text-sm text-gray-700 hover:text-black transition-colors">{label}</Link>
-            ))}
-          </div>
-        )}
-      </header>
-
+      
       <main className="max-w-[1920px] mx-auto px-6 lg:px-12 py-8 lg:py-12">
         <div className="flex items-center gap-2 text-xs text-gray-400 mb-8">
           <Link href="/" className="hover:text-[#1a1a1a] transition-colors">Home</Link>
@@ -332,7 +246,7 @@ export default function CartPage() {
 
             {/* ── RIGHT: ORDER SUMMARY ── */}
             <div className="flex flex-col gap-4">
-              <div className="bg-white rounded-2xl border border-[#ede9e2] p-6 sticky top-20">
+              <div className="bg-white rounded-2xl border border-[#ede9e2] p-6 sticky top-8">
                 <h2 className="text-base font-extrabold tracking-tight mb-5">Order Summary</h2>
                 <div className="flex flex-col gap-3 mb-5">
                   <div className="flex justify-between text-sm">
@@ -380,12 +294,9 @@ export default function CartPage() {
                   )}
                 </div>
 
-                {/* ── Proceed to Checkout → /payment ── */}
                 <button
                   onClick={handleCheckout}
-                  className="w-full bg-[#1a1a1a] text-white py-4 rounded-full text-sm
-                             font-bold tracking-wide hover:bg-[#333] active:scale-[0.98]
-                             transition-all flex items-center justify-center gap-2 mb-3"
+                  className="w-full bg-[#1a1a1a] text-white py-4 rounded-full text-sm font-bold tracking-wide hover:bg-[#333] active:scale-[0.98] transition-all flex items-center justify-center gap-2 mb-3"
                 >
                   <LockIcon /> Proceed to Checkout
                 </button>
