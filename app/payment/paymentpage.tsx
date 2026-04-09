@@ -172,10 +172,7 @@ export default function PaymentPage() {
       {/* ── NAVBAR ── */}
       <header className="w-full bg-white border-b border-gray-200 sticky top-0 z-20">
         <div className="max-w-[1920px] mx-auto px-6 lg:px-12 h-14 flex items-center justify-between">
-          <Link href="/" className="text-xl font-black uppercase hover:opacity-80 transition-opacity"
-            style={{ letterSpacing: "0.18em" }}>
-            VESSA
-          </Link>
+         
           {/* Breadcrumb steps */}
           <div className="hidden sm:flex items-center gap-2 text-xs font-medium">
             {["Cart", "Details", "Payment"].map((step, i) => (
@@ -203,7 +200,7 @@ export default function PaymentPage() {
           <div className="flex flex-col gap-6">
 
             {/* Back link */}
-            <Link href="/cart"
+            <Link href="/addtocart"
               className="inline-flex items-center gap-1.5 text-sm text-gray-400
                          hover:text-[#1a1a1a] transition-colors w-fit">
               <ChevronLeft /> Back to Cart
